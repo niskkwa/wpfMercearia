@@ -1,0 +1,346 @@
+﻿<Window x:Class="WpfMercearia.RelatorioVendasWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Relatório de Vendas"
+        Height="650"
+        Width="950"
+        WindowStartupLocation="CenterOwner"
+        FontFamily="Segoe UI">
+
+    <Window.Resources>
+
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="12,7"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+    </Window.Resources>
+
+
+    <Grid Margin="15">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="15"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+        <!-- ====================================== -->
+        <!-- FILTROS -->
+        <!-- ====================================== -->
+
+        <GroupBox
+            Grid.Row="0"
+            Header="Período">
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <!-- ANO -->
+
+                <StackPanel
+                    Grid.Row="0"
+                    Orientation="Horizontal">
+
+                    <TextBlock
+                        Text="Ano:"
+                        FontWeight="SemiBold"
+                        Margin="5"/>
+
+                    <ComboBox
+                        x:Name="cbAno"
+                        Width="120"
+                        Margin="5"/>
+
+                </StackPanel>
+
+
+                <!-- MESES -->
+
+                <WrapPanel
+                    Grid.Row="1"
+                    Margin="5,10,5,5">
+
+                    <CheckBox
+                        x:Name="chkJaneiro"
+                        Content="Janeiro"
+                        Tag="1"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkFevereiro"
+                        Content="Fevereiro"
+                        Tag="2"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkMarco"
+                        Content="Março"
+                        Tag="3"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkAbril"
+                        Content="Abril"
+                        Tag="4"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkMaio"
+                        Content="Maio"
+                        Tag="5"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkJunho"
+                        Content="Junho"
+                        Tag="6"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkJulho"
+                        Content="Julho"
+                        Tag="7"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkAgosto"
+                        Content="Agosto"
+                        Tag="8"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkSetembro"
+                        Content="Setembro"
+                        Tag="9"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkOutubro"
+                        Content="Outubro"
+                        Tag="10"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkNovembro"
+                        Content="Novembro"
+                        Tag="11"
+                        Margin="8,5"/>
+
+                    <CheckBox
+                        x:Name="chkDezembro"
+                        Content="Dezembro"
+                        Tag="12"
+                        Margin="8,5"/>
+
+                </WrapPanel>
+
+            </Grid>
+
+        </GroupBox>
+
+
+        <!-- ====================================== -->
+        <!-- BOTÕES -->
+        <!-- ====================================== -->
+
+        <StackPanel
+            Grid.Row="1"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+
+            <Button
+                Content="Todos os meses"
+                Click="btnTodosMeses_Click"/>
+
+            <Button
+                Content="Limpar"
+                Click="btnLimparMeses_Click"/>
+
+            <Button
+                Content="Gerar Relatório"
+                Background="#1565C0"
+                Foreground="White"
+                FontWeight="Bold"
+                Click="btnGerarRelatorio_Click"/>
+
+        </StackPanel>
+
+
+        <!-- ====================================== -->
+        <!-- CONTEÚDO -->
+        <!-- ====================================== -->
+
+        <Grid Grid.Row="3">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="15"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <!-- ================================== -->
+            <!-- PRODUTOS -->
+            <!-- ================================== -->
+
+            <GroupBox
+                Grid.Column="0"
+                Header="Produtos vendidos">
+
+                <DataGrid
+                    x:Name="dgProdutos"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    CanUserAddRows="False">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn
+                            Header="Produto"
+                            Binding="{Binding Produto}"
+                            Width="*"/>
+
+                        <DataGridTextColumn
+                            Header="Quantidade"
+                            Binding="{Binding QuantidadeTotal, StringFormat=N3}"
+                            Width="130"/>
+
+                        <DataGridTextColumn
+                            Header="Unidade"
+                            Binding="{Binding Unidade}"
+                            Width="80"/>
+
+                        <DataGridTextColumn
+                            Header="Total"
+                            Binding="{Binding ValorTotal, StringFormat=C2}"
+                            Width="130"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </GroupBox>
+
+
+            <!-- ================================== -->
+            <!-- PAGAMENTOS -->
+            <!-- ================================== -->
+
+            <GroupBox
+                Grid.Column="2"
+                Header="Formas de pagamento">
+
+                <DataGrid
+                    x:Name="dgFormasPagamento"
+                    AutoGenerateColumns="False"
+                    IsReadOnly="True"
+                    CanUserAddRows="False">
+
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn
+                            Header="Forma"
+                            Binding="{Binding FormaPagamento}"
+                            Width="*"/>
+
+                        <DataGridTextColumn
+                            Header="Total"
+                            Binding="{Binding ValorTotal, StringFormat=C2}"
+                            Width="130"/>
+
+                    </DataGrid.Columns>
+
+                </DataGrid>
+
+            </GroupBox>
+
+        </Grid>
+
+
+        <!-- ====================================== -->
+        <!-- RESUMO -->
+        <!-- ====================================== -->
+
+        <Border
+            Grid.Row="4"
+            Background="#F5F5F5"
+            Padding="15"
+            Margin="0,15,0,0">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+
+                <StackPanel
+                    Grid.Column="0">
+
+                    <TextBlock
+                        Text="Vendas realizadas"
+                        Foreground="Gray"/>
+
+                    <TextBlock
+                        x:Name="txtQuantidadeVendas"
+                        Text="0"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+
+                </StackPanel>
+
+
+                <StackPanel
+                    Grid.Column="1">
+
+                    <TextBlock
+                        Text="Produtos vendidos"
+                        Foreground="Gray"/>
+
+                    <TextBlock
+                        x:Name="txtQuantidadeProdutos"
+                        Text="0"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+
+                </StackPanel>
+
+
+                <StackPanel
+                    Grid.Column="2">
+
+                    <TextBlock
+                        Text="Faturamento"
+                        Foreground="Gray"/>
+
+                    <TextBlock
+                        x:Name="txtFaturamento"
+                        Text="R$ 0,00"
+                        FontSize="24"
+                        FontWeight="Bold"/>
+
+                </StackPanel>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</Window>
